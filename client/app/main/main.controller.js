@@ -8,4 +8,8 @@ angular.module('menuApp')
       $scope.awesomeThings = awesomeThings;
     });
 
+  })
+  .controller('MainCtrl1', function ($scope, $http) {
+    console.log('controller 1');
+
   });
