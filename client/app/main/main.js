@@ -3,14 +3,21 @@
 angular.module('menuApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('main', {
+      .state('home', {
         url: '/',
-        templateUrl: 'app/main/main.html',
-        controller: 'MainCtrl'
+        templateUrl: 'app/layout/home.html',
+        controller: function($scope) {
+          $scope.$parent.headerText = "";
+        }
       })
-      .state('main1', {
-        url: '/1',
-        template: '<b>xxx </b>',
-        controller: 'MainCtrl1'
-      });
+      .state('templatelist', {
+        url: '/templates',
+        templateUrl: 'app/templates/list.html',
+        controller: 'TemplateListCtrl'
+      })
+      .state('templateassign', {
+        url: '/player/list',
+        templateUrl: 'app/player/list.html',
+        controller: 'PlayerListCtrl'
+      })
   });

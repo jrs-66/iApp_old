@@ -19,6 +19,9 @@ module.exports = function (grunt) {
     buildcontrol: 'grunt-build-control'
   });
 
+  // grunt replace is used for angular constant configutation
+  grunt.loadNpmTasks('grunt-replace');
+
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
@@ -105,7 +108,34 @@ module.exports = function (grunt) {
         }
       }
     },
-
+    replace: {
+      development: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('./config/environments/development.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./config/config.js'],
+          dest: '<%= yeoman.client %>/scripts/services/'
+        }]
+      },
+      production: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('./config/environments/production.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./config/config.js'],
+          dest: '<%= yeoman.client %>/scripts/services/'
+        }]
+      }
+    },
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
@@ -514,6 +544,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('serve', function (target) {
+
     if (target === 'dist') {
       return grunt.task.run(['build', 'env:all', 'env:prod', 'express:prod', 'wait', 'open', 'express-keepalive']);
     }
@@ -530,7 +561,6 @@ module.exports = function (grunt) {
         'concurrent:debug'
       ]);
     }
-
     grunt.task.run([
       'clean:server',
       'env:all',
@@ -542,7 +572,8 @@ module.exports = function (grunt) {
       'express:dev',
       'wait',
       'open',
-      'watch'
+      'watch',
+      'replace:development'
     ]);
   });
 
@@ -613,4 +644,15 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.registerTask('dev', [
+    'replace:development'
+    // Add further deploy related tasks here
+  ]);
+
+  grunt.registerTask('prod', [
+    'replace:production'
+    // Add further deploy related tasks here
+  ]);
+
 };

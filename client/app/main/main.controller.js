@@ -1,26 +1,30 @@
 'use strict';
 
 angular.module('menuApp')
-  .controller('MainCtrl', function ($scope, $http, mySocket) {
-    $scope.awesomeThings = [];
+  .controller('MainCtrl', function ($scope, $http, mySocket, configuration, $timeout, $q) {
+    var prom;
+    $scope.message = {
+      messageShow: false,
+      message: false,
+    };
 
-    mySocket.on('news', function (data) {
-      console.log(data);
-      mySocket.emit('my other event', { my: 'data' });
+    //console.log(configuration.foo);
+    mySocket.on('message', function (data) {
+      $scope.setMessage(data.message);
+      //mySocket.emit('my other event', { my: 'data' });
     });
 
-
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-    });
+    $scope.setMessage = function(message) {
+      if (!$scope.message.messageShow && !$scope.message.message) {
+        $scope.message.message = message;
+        $scope.message.messageShow = true;
+        $timeout(function() {
+          $scope.message.messageShow = false;
+          $timeout(function() {
+            $scope.message.message = false;
+          }, 200);
+        }, 2000);
+      }
+    }
 
   })
-  .controller('MainCtrl1', function ($scope, mySocket) {
-    console.log('controller 1');
-    mySocket.emit('try', 'message');
-
-    mySocket.on('servertryback', function(socket, msg) {
-      console.log(msg);
-      console.log('right back');
-    });
-  });

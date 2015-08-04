@@ -6,6 +6,7 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
@@ -19,8 +20,16 @@
   </head>
   <body ng-app="menuApp" ng-controller="MainCtrl">
 
-    <section ui-view></section>
-this is my app1
+    <ng-include src="'app/layout/header.html'"></ng-include>
+
+    <div class="body">
+      <section ui-view></section>
+    </div>
+
+    <ng-include src="'app/layout/footer.html'"></ng-include>
+    <div ng-hide="!message.messageShow" class="fx-fade-normal fx-speed-200">
+      <div class="message_box fx-fade-right fx-speed-700 fx-trigger" ng-show="message.message">{{ message.message }}</div>
+    </div>
       <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
     <!-- build:js({client,node_modules}) app/vendor.js -->
       <!-- bower:js -->
@@ -32,14 +41,25 @@ this is my app1
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script src="bower_components/angular-socket-io/socket.js"></script>
+      <script src="bower_components/ng-slide-down/dist/ng-slide-down.js"></script>
+      <script src="bower_components/angular-animate/angular-animate.js"></script>
+      <script src="bower_components/gsap/src/uncompressed/TweenMax.js"></script>
+      <script src="bower_components/ngFx/dist/ngFx.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({.tmp,client}) app/app.js -->
+
       <script src="app/app.js"></script>
+      <script src="scripts/services/config.js"></script>
+      <script src="scripts/services/rest.js"></script>
       <!-- injector:js -->
+      <script src="app/config.js"></script>
       <script src="app/main/main.controller.js"></script>
       <script src="app/main/main.js"></script>
+      <script src="app/oauth/oauth.controller.js"></script>
+      <script src="app/player/player.controller.js"></script>
+      <script src="app/templates/template.controller.js"></script>
       <!-- endinjector -->
     <!-- endbuild -->
 </body>

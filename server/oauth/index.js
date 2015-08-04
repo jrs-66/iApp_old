@@ -1,10 +1,10 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./thing.controller');
-
 var router = express.Router();
 
-router.get('/', controller.index);
+var controller = require('./oauth.controller');
+
+router.get('/return*', controller.authorize);
 
 module.exports = router;
