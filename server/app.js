@@ -66,9 +66,9 @@ require('./routes')(app);
 server.listen(config.port, config.ip, function () {
   console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
 });
-httpsServer.listen(443, config.ip, function () {
-  console.log('Express server listening on https: %d, in %s mode', 443, app.get('env'));
-});
+//httpsServer.listen(443, config.ip, function () {
+//  console.log('Express server listening on https: %d, in %s mode', 443, app.get('env'));
+//});
 
 // Expose app
 exports = module.exports = app;
